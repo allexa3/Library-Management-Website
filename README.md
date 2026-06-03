@@ -47,19 +47,19 @@ Below are the architectural interface routing configurations and respective desi
 * **Component Target:** `LoginComponent`
 * **Route Configuration:** `demo-app/src/app/features/login/`
 * **Visual Blueprint:**  
-  ![User Login Page](images\login.png)
+  ![User Login Page](images/login.png)
 
 ### Asset Catalog
 * **Component Target:** `BookListPageComponent`
 * **Route Configuration:** `demo-app/src/app/features/book-list/`
 * **Visual Blueprint:**  
-  ![Book Catalog Page](images\books.png)
+  ![Book Catalog Page](images/books.png)
 
 ### Registry Directory
 * **Component Target:** `PersonListPageComponent`
 * **Route Configuration:** `demo-app/src/app/features/person-list/`
 * **Visual Blueprint:**  
-  ![People Directory Page](images\people.png)
+  ![People Directory Page](images/people.png)
 
 ---
 
