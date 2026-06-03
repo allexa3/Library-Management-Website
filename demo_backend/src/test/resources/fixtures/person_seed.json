@@ -1,0 +1,18 @@
+[
+  {
+    "id": "212ce74b-b872-46c0-a159-7d8da9c50133",
+    "name": "John Doe",
+    "password": "$2a$10$exampleHashedPasswordForJohnDoe123",
+    "age": 30,
+    "email": "john.doe@example.com",
+    "role": "ADMIN"
+  },
+  {
+    "id": "312ce74b-b872-46c0-a159-7d8da9c50144",
+    "name": "Jane Doe",
+    "password": "$2a$10$exampleHashedPasswordForJaneDoe456",
+    "age": 25,
+    "email": "jane.doe@example.com",
+    "role": "CUSTOMER"
+  }
+]

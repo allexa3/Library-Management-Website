@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <title>LibFlow — Library Management</title>
+    <base href="/" />
+
+    <!-- Viewport & Mobile -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#c9901e" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#1a1510" media="(prefers-color-scheme: dark)" />
+
+    <!-- SEO Meta -->
+    <meta name="description" content="LibFlow — a streamlined library management system for tracking books, members, and loans." />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="author" content="LibFlow" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="LibFlow — Library Management" />
+    <meta property="og:description" content="Streamlined library management for tracking books, members, and loans." />
+    <meta property="og:type" content="website" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+
+    <!-- Font preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- Fonts — Playfair Display (display/headings) + DM Sans (body) -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "LibFlow",
+      "description": "Library management system for books, members, and loans.",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web"
+    }
+    </script>
+  </head>
+  <body>
+    <!-- Skip to main content — WCAG 2.4.1 -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <app-root></app-root>
+
+    <style>
+      /* Skip link — visible only on focus */
+      .skip-link {
+        position: absolute;
+        top: -100%;
+        left: 1rem;
+        z-index: 9999;
+        padding: 0.5rem 1rem;
+        background: #c9901e;
+        color: #1a1510;
+        font-weight: 600;
+        font-size: 0.875rem;
+        border-radius: 0 0 8px 8px;
+        text-decoration: none;
+        transition: top 0.1s;
+      }
+      .skip-link:focus {
+        top: 0;
+        outline: 3px solid #1a1510;
+        outline-offset: 2px;
+      }
+    </style>
+  </body>
+</html>

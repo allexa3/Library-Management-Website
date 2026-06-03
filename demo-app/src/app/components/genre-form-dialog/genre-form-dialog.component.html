@@ -1,0 +1,69 @@
+<div
+  class="dialog-shell"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="genre-dialog-title">
+
+  <!-- Header -->
+  <header class="dialog-header">
+    <h2 id="genre-dialog-title" class="dialog-title">{{ data.title }}</h2>
+    <button
+      type="button"
+      class="dialog-close-btn"
+      (click)="cancel()"
+      aria-label="Close dialog">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+        <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+  </header>
+
+  <!-- Form -->
+  <form
+    [formGroup]="form"
+    (ngSubmit)="submit()"
+    novalidate
+    autocomplete="off">
+
+    <div class="dialog-body">
+      <div class="form-group">
+        <label for="genre-name" class="form-label">
+          Genre name <span class="required-star" aria-hidden="true">*</span>
+        </label>
+        <input
+          id="genre-name"
+          type="text"
+          class="form-input"
+          formControlName="name"
+          placeholder="e.g. Science Fiction"
+          aria-required="true"
+          [attr.aria-invalid]="form.controls.name.invalid && form.controls.name.touched"
+          aria-describedby="genre-name-error"
+          autofocus />
+        <span
+          id="genre-name-error"
+          class="form-error"
+          role="alert"
+          *ngIf="form.controls.name.touched && form.controls.name.hasError('required')">
+          Genre name is required.
+        </span>
+        <span
+          class="form-error"
+          role="alert"
+          *ngIf="form.controls.name.touched && form.controls.name.hasError('minlength')">
+          Name must be at least 2 characters.
+        </span>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="dialog-footer">
+      <button type="button" class="btn-secondary" (click)="cancel()">
+        Cancel
+      </button>
+      <button type="submit" class="btn-primary" [disabled]="form.invalid">
+        {{ data.submitLabel ?? 'Save' }}
+      </button>
+    </footer>
+  </form>
+</div>

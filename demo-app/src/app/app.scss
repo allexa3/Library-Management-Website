@@ -1,0 +1,312 @@
+/* ==========================================================================
+   APP SHELL LAYOUT
+   ========================================================================== */
+
+.app-shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+}
+
+.auth-layout {
+  background: var(--bg-page);
+}
+
+/* --------------------------------------------------------------------------
+   NAVIGATION BAR
+   -------------------------------------------------------------------------- */
+.app-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: var(--bg-elevated);
+  border-bottom: 1px solid var(--border-subtle);
+  box-shadow: var(--shadow-sm);
+  height: 60px;
+  flex-shrink: 0;
+}
+
+.nav-inner {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-6);
+  height: 100%;
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: 0 var(--sp-6);
+
+  @media (max-width: 640px) {
+    padding: 0 var(--sp-4);
+    gap: var(--sp-3);
+  }
+}
+
+/* Brand */
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  text-decoration: none;
+  color: var(--text-primary);
+  flex-shrink: 0;
+  transition: opacity var(--ease-fast);
+
+  &:hover { opacity: 0.8; }
+  &:focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring);
+    border-radius: var(--radius-sm);
+  }
+}
+
+.brand-icon {
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+}
+
+.brand-name {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-bold);
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+/* Nav links */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-1);
+  flex: 1;
+
+  @media (max-width: 640px) {
+    display: none;
+  }
+}
+
+.nav-link {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--sp-2) var(--sp-3);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--text-secondary);
+  text-decoration: none;
+  border-radius: var(--radius-md);
+  transition:
+    background-color var(--ease-fast),
+    color var(--ease-fast);
+  white-space: nowrap;
+
+  &:hover {
+    background-color: var(--bg-hover);
+    color: var(--text-primary);
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring);
+  }
+
+  &.nav-link--active {
+    background-color: var(--accent-muted);
+    color: var(--text-brand);
+    font-weight: var(--weight-semibold);
+  }
+}
+
+/* Right controls */
+.nav-controls {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  margin-left: auto;
+}
+
+.nav-icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border-default);
+  background-color: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition:
+    background-color var(--ease-fast),
+    color var(--ease-fast),
+    border-color var(--ease-fast);
+  flex-shrink: 0;
+
+  &:hover {
+    background-color: var(--bg-hover);
+    color: var(--text-primary);
+    border-color: var(--border-strong);
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring);
+  }
+}
+
+/* Hamburger button — hidden on desktop, visible on mobile */
+.hamburger-btn {
+  display: none;
+
+  @media (max-width: 640px) {
+    display: flex;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   MOBILE MENU PANEL
+   -------------------------------------------------------------------------- */
+.mobile-menu {
+  position: absolute;
+  top: 60px;
+  left: 0;
+  right: 0;
+  z-index: 99;
+  background-color: var(--bg-elevated);
+  border-bottom: 1px solid var(--border-subtle);
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.25s ease, opacity 0.2s ease;
+  opacity: 0;
+  pointer-events: none;
+
+  &.mobile-menu--open {
+    max-height: 400px;
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  @media (min-width: 641px) {
+    display: none;
+  }
+}
+
+.mobile-nav {
+  display: flex;
+  flex-direction: column;
+  padding: var(--sp-3) var(--sp-4) var(--sp-4);
+  gap: var(--sp-1);
+}
+
+.mobile-nav-link {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-3) var(--sp-3);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--text-secondary);
+  text-decoration: none;
+  border-radius: var(--radius-md);
+  transition: background-color var(--ease-fast), color var(--ease-fast);
+  border: none;
+  background: none;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+
+  &:hover {
+    background-color: var(--bg-hover);
+    color: var(--text-primary);
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring);
+  }
+
+  &.mobile-nav-link--active {
+    background-color: var(--accent-muted);
+    color: var(--text-brand);
+    font-weight: var(--weight-semibold);
+  }
+
+  &.mobile-nav-link--login {
+    color: var(--text-brand);
+    font-weight: var(--weight-semibold);
+
+    &:hover {
+      background-color: var(--accent-muted);
+    }
+  }
+
+  &.mobile-nav-link--logout {
+    color: var(--color-error, #e53e3e);
+
+    &:hover {
+      background-color: rgba(229, 62, 62, 0.1);
+    }
+  }
+}
+
+.mobile-menu-divider {
+  height: 1px;
+  background-color: var(--border-subtle);
+  margin: var(--sp-2) 0;
+}
+
+/* --------------------------------------------------------------------------
+   AUTH HEADER (minimal — brand + theme only)
+   -------------------------------------------------------------------------- */
+.auth-header {
+  padding: var(--sp-4) var(--sp-6);
+  flex-shrink: 0;
+
+  @media (max-width: 640px) {
+    padding: var(--sp-3) var(--sp-4);
+  }
+}
+
+.auth-header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 440px;
+  margin: 0 auto;
+}
+
+/* --------------------------------------------------------------------------
+   MAIN CONTENT AREA
+   -------------------------------------------------------------------------- */
+.app-main {
+  flex: 1;
+  width: 100%;
+}
+
+/* --------------------------------------------------------------------------
+   FOOTER
+   -------------------------------------------------------------------------- */
+.app-footer {
+  background-color: var(--bg-elevated);
+  border-top: 1px solid var(--border-subtle);
+  padding: var(--sp-5) var(--sp-6);
+  margin-top: auto;
+}
+
+.footer-inner {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  text-align: center;
+
+  p {
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+}
+
+.footer-brand {
+  font-family: var(--font-display);
+  font-weight: var(--weight-semibold);
+  color: var(--text-secondary);
+}

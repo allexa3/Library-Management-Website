@@ -1,0 +1,181 @@
+<div
+  class="dialog-shell"
+  role="dialog"
+  aria-modal="true"
+  [attr.aria-labelledby]="'book-dialog-title'">
+
+  <!-- Header -->
+  <header class="dialog-header">
+    <h2 id="book-dialog-title" class="dialog-title">
+      {{ data.initialValue ? 'Edit book' : 'Add book' }}
+    </h2>
+    <button type="button" class="dialog-close-btn" (click)="cancel()" aria-label="Close dialog">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+        <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+  </header>
+
+  <!-- Body -->
+  <form [formGroup]="form" (ngSubmit)="submit()" class="dialog-form" novalidate autocomplete="off">
+    <div class="dialog-body">
+
+      <!-- Title -->
+      <div class="form-group">
+        <label for="book-title" class="form-label">
+          Title <span class="required-star" aria-hidden="true">*</span>
+        </label>
+        <input
+          id="book-title"
+          type="text"
+          class="form-input"
+          formControlName="title"
+          placeholder="e.g. Clean Architecture"
+          aria-required="true"
+          [attr.aria-invalid]="form.get('title')?.invalid && form.get('title')?.touched"
+          aria-describedby="book-title-error" />
+        <span id="book-title-error" class="form-error" role="alert"
+          *ngIf="form.get('title')?.invalid && form.get('title')?.touched">
+          Title is required (at least 2 characters).
+        </span>
+      </div>
+
+      <!-- Author -->
+      <div class="form-group">
+        <label for="book-author" class="form-label">
+          Author <span class="required-star" aria-hidden="true">*</span>
+        </label>
+        <input
+          id="book-author"
+          type="text"
+          class="form-input"
+          formControlName="authorName"
+          placeholder="e.g. Robert C. Martin"
+          aria-required="true"
+          [attr.aria-invalid]="form.get('authorName')?.invalid && form.get('authorName')?.touched"
+          aria-describedby="book-author-error" />
+        <span id="book-author-error" class="form-error" role="alert"
+          *ngIf="form.get('authorName')?.invalid && form.get('authorName')?.touched">
+          Author name is required.
+        </span>
+      </div>
+
+      <!-- ISBN -->
+      <div class="form-group">
+        <label for="book-isbn" class="form-label">
+          ISBN-13 <span class="required-star" aria-hidden="true">*</span>
+        </label>
+        <input
+          id="book-isbn"
+          type="text"
+          class="form-input-code"
+          formControlName="isbn"
+          placeholder="e.g. 9780134494166"
+          aria-required="true"
+          inputmode="numeric"
+          maxlength="13"
+          [attr.aria-invalid]="form.get('isbn')?.invalid && form.get('isbn')?.touched"
+          aria-describedby="book-isbn-error" />
+        <span id="book-isbn-error" class="form-error" role="alert"
+          *ngIf="form.get('isbn')?.invalid && form.get('isbn')?.touched">
+          Must be a valid 13-digit ISBN starting with 978 or 979.
+        </span>
+      </div>
+
+      <!-- Borrower assignment -->
+      <div class="form-group">
+        <label for="book-person" class="form-label">
+          Assign to member <span class="optional-tag">(optional)</span>
+        </label>
+        <select
+          id="book-person"
+          class="form-select"
+          formControlName="personId"
+          aria-describedby="book-person-hint">
+          <option value="">— Leave unassigned (available) —</option>
+          <option *ngFor="let person of people" [value]="person.id">
+            {{ person.name }} · {{ person.role }}
+          </option>
+        </select>
+        <p id="book-person-hint" class="field-help">
+          Due date is auto-calculated: 14 days for customers, 30 days for admins.
+        </p>
+      </div>
+
+      <!-- ── GENRES — custom checkbox multi-select ── -->
+      <div class="form-group">
+        <div class="genre-picker-label-row">
+          <label class="form-label" id="genres-label">
+            Genres <span class="required-star" aria-hidden="true">*</span>
+          </label>
+          <span class="genre-count-badge" *ngIf="selectedGenreIds().length > 0">
+            {{ selectedGenreIds().length }} selected
+          </span>
+        </div>
+
+        <!-- Search within genres -->
+        <div class="genre-search-wrapper">
+          <svg class="genre-search-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+          <input
+            type="search"
+            class="form-input genre-search-input"
+            [value]="genreSearch()"
+            (input)="onGenreSearch($event)"
+            placeholder="Filter genres…"
+            autocomplete="off"
+            aria-label="Search genres" />
+        </div>
+
+        <!-- Checkbox list -->
+        <div
+          class="genre-checkbox-list"
+          role="group"
+          aria-labelledby="genres-label"
+          [attr.aria-invalid]="form.get('genreIds')?.invalid && form.get('genreIds')?.touched">
+
+          <ng-container *ngIf="filteredGenres().length > 0; else noGenresMatch">
+            <label
+              *ngFor="let genre of filteredGenres()"
+              class="genre-checkbox-item"
+              [class.is-checked]="isGenreSelected(genre.id)">
+              <input
+                type="checkbox"
+                class="genre-checkbox-input"
+                [checked]="isGenreSelected(genre.id)"
+                (change)="toggleGenre(genre.id)"
+                [attr.aria-label]="genre.name" />
+              <span class="genre-checkbox-box" aria-hidden="true">
+                <svg *ngIf="isGenreSelected(genre.id)" width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+                  <polyline points="2 6 5 9 10 3"/>
+                </svg>
+              </span>
+              <span class="genre-checkbox-label">{{ genre.name }}</span>
+            </label>
+          </ng-container>
+
+          <ng-template #noGenresMatch>
+            <p class="genre-no-results">
+              {{ genres.length === 0 ? 'No genres available — create some in the Genres section.' : 'No genres match your search.' }}
+            </p>
+          </ng-template>
+        </div>
+
+        <span class="form-error" role="alert"
+          *ngIf="form.get('genreIds')?.invalid && form.get('genreIds')?.touched">
+          Select at least one genre.
+        </span>
+      </div>
+
+    </div><!-- /dialog-body -->
+
+    <!-- Footer -->
+    <footer class="dialog-footer">
+      <button type="button" class="btn-secondary" (click)="cancel()">Cancel</button>
+      <button type="submit" class="btn-primary" [disabled]="form.invalid">
+        {{ data.initialValue ? 'Save changes' : 'Add book' }}
+      </button>
+    </footer>
+  </form>
+</div>

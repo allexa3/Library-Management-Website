@@ -1,0 +1,198 @@
+/* ==========================================================================
+   SHARED DIALOG STYLES
+   All form dialogs import this via their component SCSS
+   ========================================================================== */
+
+/* The dialog wrapper itself — Material sets the outer surface,
+   we style the inner content layout */
+.dialog-shell {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-elevated);
+  color: var(--text-primary);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  max-height: 90dvh;
+}
+
+/* --------------------------------------------------------------------------
+   DIALOG HEADER
+   -------------------------------------------------------------------------- */
+.dialog-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--sp-4);
+  padding: var(--sp-6) var(--sp-6) var(--sp-5);
+  border-bottom: 1px solid var(--border-subtle);
+  flex-shrink: 0;
+}
+
+.dialog-title {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: var(--weight-bold);
+  color: var(--text-primary);
+  line-height: var(--leading-tight);
+}
+
+.dialog-close-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border-subtle);
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition:
+    background-color var(--ease-fast),
+    color var(--ease-fast);
+
+  &:hover {
+    background-color: var(--bg-hover);
+    color: var(--text-primary);
+  }
+  &:focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   DIALOG BODY / SCROLLABLE AREA
+   -------------------------------------------------------------------------- */
+.dialog-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--sp-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-5);
+
+  @media (max-width: 480px) {
+    padding: var(--sp-5) var(--sp-4);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   DIALOG FOOTER
+   -------------------------------------------------------------------------- */
+.dialog-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--sp-3);
+  padding: var(--sp-4) var(--sp-6) var(--sp-5);
+  border-top: 1px solid var(--border-subtle);
+  flex-shrink: 0;
+
+  @media (max-width: 480px) {
+    padding: var(--sp-4);
+    flex-direction: column-reverse;
+
+    button {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+}
+
+/* --------------------------------------------------------------------------
+   FORM ELEMENTS INSIDE DIALOGS
+   -------------------------------------------------------------------------- */
+
+/* Extend global form classes with dialog-specific overrides */
+.dialog-body .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+
+.dialog-body .form-label {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--text-secondary);
+}
+
+.dialog-body .form-input,
+.dialog-body .form-select {
+  background-color: var(--bg-surface);
+  border-color: var(--border-default);
+
+  &:focus {
+    border-color: var(--accent);
+    box-shadow: var(--focus-ring);
+  }
+}
+
+/* Multi-select */
+.form-select-multiple {
+  min-height: 130px;
+  height: auto;
+  padding: var(--sp-2) var(--sp-3);
+
+  option {
+    padding: var(--sp-1) var(--sp-2);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+
+    &:checked {
+      background-color: var(--accent-muted);
+      color: var(--accent-text);
+    }
+  }
+}
+
+/* Help text below fields */
+.field-help {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  line-height: var(--leading-normal);
+  padding: var(--sp-2) var(--sp-3);
+  background-color: var(--bg-sunken);
+  border-radius: var(--radius-md);
+  border-left: 3px solid var(--border-default);
+}
+
+/* Password visibility toggle row */
+.password-field-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-field-wrapper .form-input {
+  padding-right: 80px;
+}
+
+.password-toggle-btn {
+  position: absolute;
+  right: var(--sp-2);
+  display: flex;
+  align-items: center;
+  padding: var(--sp-1) var(--sp-2);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  color: var(--text-brand);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+  transition: color var(--ease-fast);
+  font-family: var(--font-body);
+
+  &:hover { color: var(--accent-hover); }
+  &:focus-visible { box-shadow: var(--focus-ring); outline: none; }
+}
+
+/* Select role field */
+.role-select-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}

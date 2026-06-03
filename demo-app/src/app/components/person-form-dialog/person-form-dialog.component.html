@@ -1,0 +1,206 @@
+<div
+  class="dialog-shell"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="person-dialog-title">
+
+  <!-- Header -->
+  <header class="dialog-header">
+    <h2 id="person-dialog-title" class="dialog-title">{{ data.title }}</h2>
+    <button
+      type="button"
+      class="dialog-close-btn"
+      (click)="cancel()"
+      aria-label="Close dialog">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true">
+        <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+  </header>
+
+  <!-- Form -->
+  <form
+    [formGroup]="form"
+    (ngSubmit)="submit()"
+    novalidate
+    autocomplete="off">
+
+    <div class="dialog-body">
+
+      <!-- Name -->
+      <div class="form-group">
+        <label for="person-name" class="form-label">
+          Full name <span class="required-star" aria-hidden="true">*</span>
+        </label>
+        <input
+          id="person-name"
+          type="text"
+          class="form-input"
+          formControlName="name"
+          placeholder="e.g. Jane Smith"
+          autocomplete="name"
+          aria-required="true"
+          [attr.aria-invalid]="form.controls.name.invalid && form.controls.name.touched"
+          aria-describedby="person-name-error" />
+        <span
+          id="person-name-error"
+          class="form-error"
+          role="alert"
+          *ngIf="form.controls.name.touched && form.controls.name.hasError('required')">
+          Name is required.
+        </span>
+        <span
+          class="form-error"
+          role="alert"
+          *ngIf="form.controls.name.touched && form.controls.name.hasError('minlength')">
+          Name must be at least 2 characters.
+        </span>
+      </div>
+
+      <!-- Age -->
+      <div class="form-group">
+        <label for="person-age" class="form-label">
+          Age <span class="required-star" aria-hidden="true">*</span>
+        </label>
+        <input
+          id="person-age"
+          type="number"
+          class="form-input"
+          formControlName="age"
+          placeholder="e.g. 28"
+          autocomplete="off"
+          min="18"
+          max="200"
+          aria-required="true"
+          [attr.aria-invalid]="form.controls.age.invalid && form.controls.age.touched"
+          aria-describedby="person-age-error" />
+        <span
+          id="person-age-error"
+          class="form-error"
+          role="alert"
+          *ngIf="form.controls.age.touched && form.controls.age.hasError('required')">
+          Age is required.
+        </span>
+        <span
+          class="form-error"
+          role="alert"
+          *ngIf="form.controls.age.touched && form.controls.age.hasError('min')">
+          Must be at least 18.
+        </span>
+        <span
+          class="form-error"
+          role="alert"
+          *ngIf="form.controls.age.touched && form.controls.age.hasError('max')">
+          Must be less than 200.
+        </span>
+      </div>
+
+      <!-- Email -->
+      <div class="form-group">
+        <label for="person-email" class="form-label">
+          Email address <span class="required-star" aria-hidden="true">*</span>
+        </label>
+        <input
+          id="person-email"
+          type="email"
+          class="form-input"
+          formControlName="email"
+          placeholder="e.g. jane@example.com"
+          autocomplete="email"
+          aria-required="true"
+          [attr.aria-invalid]="form.controls.email.invalid && form.controls.email.touched"
+          aria-describedby="person-email-error" />
+        <span
+          id="person-email-error"
+          class="form-error"
+          role="alert"
+          *ngIf="form.controls.email.touched && form.controls.email.hasError('required')">
+          Email is required.
+        </span>
+        <span
+          class="form-error"
+          role="alert"
+          *ngIf="form.controls.email.touched && form.controls.email.hasError('email')">
+          Enter a valid email address.
+        </span>
+      </div>
+
+      <!-- Password (create only) -->
+      <ng-container *ngIf="data.showPasswordField">
+        <div class="form-group">
+          <label for="person-password" class="form-label">
+            Password <span class="required-star" aria-hidden="true">*</span>
+          </label>
+          <div class="password-field-wrapper">
+            <input
+              id="person-password"
+              [type]="isPasswordVisible() ? 'text' : 'password'"
+              class="form-input"
+              formControlName="password"
+              placeholder="Min 8 chars with upper, lower, digit & symbol"
+              autocomplete="new-password"
+              aria-required="true"
+              [attr.aria-invalid]="form.controls.password.invalid && form.controls.password.touched"
+              aria-describedby="person-password-error" />
+            <button
+              type="button"
+              class="password-toggle-btn"
+              (click)="togglePasswordVisibility()"
+              [attr.aria-label]="isPasswordVisible() ? 'Hide password' : 'Show password'"
+              [attr.aria-pressed]="isPasswordVisible()">
+              {{ isPasswordVisible() ? 'Hide' : 'Show' }}
+            </button>
+          </div>
+          <span
+            id="person-password-error"
+            class="form-error"
+            role="alert"
+            *ngIf="form.controls.password.touched && form.controls.password.hasError('required')">
+            Password is required.
+          </span>
+          <span
+            class="form-error"
+            role="alert"
+            *ngIf="form.controls.password.touched && form.controls.password.hasError('StrongPassword')">
+            Must contain uppercase, lowercase, digit, and special character (!@#$%^&*()).
+          </span>
+        </div>
+
+        <!-- Role -->
+        <div class="form-group">
+          <label for="person-role" class="form-label">
+            Role <span class="required-star" aria-hidden="true">*</span>
+          </label>
+          <select
+            id="person-role"
+            class="form-select"
+            formControlName="role"
+            aria-required="true"
+            [attr.aria-invalid]="form.controls.role.invalid && form.controls.role.touched"
+            aria-describedby="person-role-error">
+            <option value="CUSTOMER">Customer</option>
+            <option value="ADMIN">Admin</option>
+          </select>
+          <span
+            id="person-role-error"
+            class="form-error"
+            role="alert"
+            *ngIf="form.controls.role.touched && form.controls.role.hasError('required')">
+            Role is required.
+          </span>
+        </div>
+      </ng-container>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="dialog-footer">
+      <button type="button" class="btn-secondary" (click)="cancel()">
+        Cancel
+      </button>
+      <button type="submit" class="btn-primary" [disabled]="form.invalid">
+        {{ data.submitLabel ?? 'Save' }}
+      </button>
+    </footer>
+  </form>
+</div>

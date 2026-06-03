@@ -1,0 +1,96 @@
+/* ==========================================================================
+   CONFIRM DELETE DIALOG
+   ========================================================================== */
+
+.confirm-dialog {
+  width: min(400px, 96vw);
+  padding: var(--sp-8) var(--sp-6) var(--sp-6);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--sp-5);
+  background-color: var(--bg-elevated);
+  border-radius: var(--radius-xl);
+}
+
+.confirm-icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-full);
+  background-color: var(--clr-danger-bg);
+  color: var(--clr-danger);
+  border: 1px solid var(--clr-danger-border);
+  flex-shrink: 0;
+}
+
+.confirm-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+
+.confirm-title {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: var(--weight-bold);
+  color: var(--text-primary);
+  line-height: var(--leading-snug);
+  /* Keep long names from overflowing */
+  word-break: break-word;
+}
+
+.confirm-body {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  line-height: var(--leading-normal);
+  max-width: 320px;
+}
+
+.confirm-actions {
+  display: flex;
+  gap: var(--sp-3);
+  width: 100%;
+  justify-content: center;
+
+  @media (max-width: 360px) {
+    flex-direction: column-reverse;
+    button { width: 100%; justify-content: center; }
+  }
+}
+
+/* Delete button — filled danger */
+.btn-delete {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  height: 40px;
+  padding: 0 var(--sp-5);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--clr-danger);
+  background-color: var(--clr-danger);
+  color: #fff;
+  cursor: pointer;
+  transition:
+    background-color var(--ease-fast),
+    box-shadow var(--ease-fast),
+    transform var(--ease-fast);
+
+  &:hover {
+    background-color: #a93226;
+    border-color: #a93226;
+    box-shadow: var(--shadow-sm);
+  }
+  &:active { transform: scale(0.98); }
+  &:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(192, 57, 43, 0.35);
+  }
+}

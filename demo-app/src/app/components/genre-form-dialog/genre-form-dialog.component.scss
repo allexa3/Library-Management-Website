@@ -1,0 +1,10 @@
+@use '../dialog-shared' as *;
+
+.dialog-shell {
+  width: min(400px, 96vw);
+}
+
+.required-star {
+  color: var(--clr-danger);
+  margin-left: 2px;
+}

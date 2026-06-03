@@ -1,0 +1,42 @@
+<div
+  class="dialog-shell confirm-dialog"
+  role="alertdialog"
+  aria-modal="true"
+  aria-labelledby="confirm-title"
+  aria-describedby="confirm-desc">
+
+  <!-- Icon -->
+  <div class="confirm-icon-wrap" aria-hidden="true">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+      <polyline points="3 6 5 6 21 6"/>
+      <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
+      <path d="M10 11v6"/><path d="M14 11v6"/>
+      <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/>
+    </svg>
+  </div>
+
+  <!-- Text -->
+  <div class="confirm-content">
+    <h2 id="confirm-title" class="confirm-title">Delete "{{ data.name }}"?</h2>
+    <p id="confirm-desc" class="confirm-body">
+      This action is permanent and cannot be undone. The record will be removed immediately.
+    </p>
+  </div>
+
+  <!-- Actions -->
+  <div class="confirm-actions">
+    <button
+      type="button"
+      class="btn-secondary"
+      (click)="cancel()"
+      cdkFocusInitial>
+      Cancel
+    </button>
+    <button
+      type="button"
+      class="btn-delete"
+      (click)="confirm()">
+      Delete
+    </button>
+  </div>
+</div>

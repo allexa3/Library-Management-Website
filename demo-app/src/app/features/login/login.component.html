@@ -1,0 +1,95 @@
+<!-- SEO meta would be in index.html; here we use semantic structure -->
+<main class="auth-page" aria-labelledby="login-heading">
+  <div class="auth-card page-enter" role="region">
+
+    <!-- Heading -->
+    <div class="auth-heading-block">
+      <h1 id="login-heading" class="auth-title">Welcome back</h1>
+      <p class="auth-subtitle">Sign in to your LibFlow account to continue.</p>
+    </div>
+
+    <!-- Form -->
+    <form
+      [formGroup]="loginForm"
+      (ngSubmit)="submit()"
+      novalidate
+      autocomplete="on"
+      class="auth-form"
+      aria-label="Sign in form">
+
+      <!-- Email -->
+      <div class="form-group">
+        <label for="login-email" class="form-label">Email address</label>
+        <input
+          id="login-email"
+          type="email"
+          class="form-input"
+          formControlName="email"
+          autocomplete="username"
+          placeholder="you@example.com"
+          required
+          aria-required="true"
+          [attr.aria-invalid]="loginForm.controls.email.touched && loginForm.controls.email.invalid"
+          aria-describedby="login-email-error" />
+        <span
+          id="login-email-error"
+          class="form-error"
+          role="alert"
+          *ngIf="loginForm.controls.email.touched && loginForm.controls.email.hasError('required')">
+          Email is required.
+        </span>
+      </div>
+
+      <!-- Password -->
+      <div class="form-group">
+        <div class="label-row">
+          <label for="login-password" class="form-label">Password</label>
+          <a routerLink="/forgot-password" class="forgot-link" tabindex="0">
+            Forgot password?
+          </a>
+        </div>
+        <input
+          id="login-password"
+          type="password"
+          class="form-input"
+          formControlName="password"
+          autocomplete="current-password"
+          placeholder="••••••••"
+          required
+          aria-required="true"
+          [attr.aria-invalid]="loginForm.controls.password.touched && loginForm.controls.password.invalid"
+          aria-describedby="login-password-error" />
+        <span
+          id="login-password-error"
+          class="form-error"
+          role="alert"
+          *ngIf="loginForm.controls.password.touched && loginForm.controls.password.hasError('required')">
+          Password is required.
+        </span>
+      </div>
+
+      <!-- Error message -->
+      <div
+        class="auth-error-alert"
+        role="alert"
+        aria-live="assertive"
+        *ngIf="errorMessage()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+        </svg>
+        <span>{{ errorMessage() }}</span>
+      </div>
+
+      <!-- Submit -->
+      <button
+        type="submit"
+        class="btn-primary auth-submit-btn"
+        [disabled]="isSubmitting()"
+        [attr.aria-busy]="isSubmitting()">
+        <span class="spinner spinner-sm" *ngIf="isSubmitting()" aria-hidden="true"></span>
+        {{ isSubmitting() ? 'Signing in…' : 'Sign in' }}
+      </button>
+    </form>
+
+  </div>
+</main>
